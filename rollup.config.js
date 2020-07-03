@@ -5,14 +5,15 @@ import vue from 'rollup-plugin-vue' // 处理vue文件
 import babel from 'rollup-plugin-babel'  // rollup 的 babel 插件，ES6转ES5
 import css from 'rollup-plugin-css-only' // 提取css，压缩能力不行
 import { terser } from 'rollup-plugin-terser'; // 实现js代码压缩
-import CleanCSS from 'clean-css' // 压缩css
+import clear from "rollup-plugin-clear";
 import replace from 'rollup-plugin-replace'    //代码中的__SAM__被正确替换；
 import alias from 'rollup-plugin-alias'   // 将模块中’@'别名替换为’src’目录；
-import { writeFileSync } from 'fs' // 写文件
+import json from 'rollup-plugin-json';
 import pkg from "./package.json";
 const isDev = process.env.NODE_ENV !== 'production'
 import path from 'path'
 import _ from "lodash";
+
 const pathResolve = p => path.resolve(__dirname, p)
 let name = _.last(_.split(pkg.name,'/'))
 function getUpperName(name) {
@@ -32,20 +33,18 @@ export default {
     { file: pkg.iife, format: 'iife', name:getUpperName(name) },
   ],
   external: ['lodash'],   // 不打包 lodash
-  globals: {
-    lodash: '_'
-  },
   plugins: [
+    clear({
+      targets: ["dist"]
+    }),
+    json(),
     resolve({
       mainFields: ['module', 'main', 'browser'],
       extensions: ['.vue', '.js', '.jsx', '.json'],
     }),
     commonjs(),
     css({
-      output(style) {
-        // 压缩 css 写入 dist/vue-rollup-component-template.css
-        writeFileSync(`dist/${name}.min.css`, new CleanCSS().minify(style).styles)
-      }
+      output: `dist/${name}.min.css`,
     }),
     // css: false 将<style>块转换为导入语句，rollup-plugin-css-only可以提取.vue文件中的样式
     vue({ css: false }),
@@ -55,7 +54,7 @@ export default {
     }),
     alias({
       entries: [
-        { find: '@', replacement: pathResolve('src') },
+        { find: 'src', replacement: pathResolve('src') },
       ],
     }),
     replace({

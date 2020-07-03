@@ -1,11 +1,11 @@
 {
-  "name": "@i61/my-element",
-  "version": "1.0.4",
+  "version": "1.0.0",
+  "name": "@i61/my-plugin",
   "description": "A rollup + vue component development template",
-  "main": "dist/my-element.esm.js",
-  "module": "dist/my-element.cjs.js",
-  "browser": "dist/my-element.umd.js",
-  "iife": "dist/my-element.min.js",
+  "main": "dist/my-plugin.esm.js",
+  "module": "dist/my-plugin.cjs.js",
+  "browser": "dist/my-plugin.umd.js",
+  "iife": "dist/my-plugin.min.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production rollup --config rollup.config.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
@@ -50,15 +50,18 @@
     "rollup-plugin-terser": "^6.1.0",
     "rollup-plugin-uglify-es": "0.0.1",
     "rollup-plugin-vue": "^5.0.1",
+    "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-json": "^4.0.0",
     "sass-loader": "^7.0.0",
     "vue": "^2.6.10",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
+   
   },
   "dependencies": {
-    "@i61/my-element": "^1.0.4",
     "lodash": "^4.17.15"
+   
   }
 }

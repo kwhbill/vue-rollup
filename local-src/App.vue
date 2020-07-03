@@ -2,6 +2,7 @@
   <div id="app">
     <h1>vue-rollup-component-template</h1>
     <p>轻松进行组件开发、发布、展示</p>
+    <v-demo></v-demo>
     <v-list>
       <!-- <v-list-item :list="list"></v-list-item> -->
     </v-list>
